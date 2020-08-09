@@ -7,7 +7,7 @@ const AnswerItem = (props) => {
         <li
             className={classes.AnswerItem}
         >
-            {props.answer.text}
+            { props.answer.text }
         </li>
     )
 }
