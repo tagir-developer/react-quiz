@@ -3,6 +3,7 @@ import classes from './Auth.module.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import is from 'is_js'
+import axios from 'axios'
 
 export default class Auth extends Component {
 
@@ -36,12 +37,35 @@ export default class Auth extends Component {
 		}
 	}
 
-	loginHandler = () => {
+	loginHandler = async () => {
+		const authData = {
+			email: this.state.formControls.email.value,
+			password: this.state.formControls.password.value,
+			returnSecureToken: true
+		}
 
+		try {
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCPL-DU50oB1b9JA6shGNuERayikNhx27Y', authData)
+			console.log(response.data)
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
-	registerHandler = () => {
-		
+	registerHandler = async () => {
+		const authData = {
+			email: this.state.formControls.email.value,
+			password: this.state.formControls.password.value,
+			returnSecureToken: true
+		}
+
+		try {
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCPL-DU50oB1b9JA6shGNuERayikNhx27Y', authData)
+			console.log(response.data)
+		} catch (e) {
+			console.log(e)
+		}
+
 	}
 
 	submitHandler = event => {
@@ -49,21 +73,21 @@ export default class Auth extends Component {
 	}
 
 	validateControl(value, validation) {
-		if(!validation) {
+		if (!validation) {
 			return true
 		}
 
 		let isValid = true
 
-		if(validation.required) {
+		if (validation.required) {
 			isValid = value.trim() !== '' && isValid
 		}
 
-		if(validation.email) {
+		if (validation.email) {
 			isValid = is.email(value) && isValid
 		}
 
-		if(validation.minLength) {
+		if (validation.minLength) {
 			isValid = value.length >= validation.minLength && isValid
 		}
 
@@ -72,8 +96,8 @@ export default class Auth extends Component {
 
 	onChangeHandler = (event, controlName) => {
 
-		const formControls = {...this.state.formControls}
-		const control = {...formControls[controlName]}
+		const formControls = { ...this.state.formControls }
+		const control = { ...formControls[controlName] }
 
 		control.value = event.target.value
 		control.touched = true
@@ -99,23 +123,23 @@ export default class Auth extends Component {
 
 			const control = this.state.formControls[controlName]
 
-			return(
-				<Input 
-				key={controlName + index}
-				value={control.value}
-				type={control.type}
-				label={control.label}
-				errorMessage={control.errorMessage}
-				valid={control.valid}
-				touched={control.touched}
-				shouldValidate={!!control.validate}
-				onChange={(event) => this.onChangeHandler(event, controlName)}
+			return (
+				<Input
+					key={controlName + index}
+					value={control.value}
+					type={control.type}
+					label={control.label}
+					errorMessage={control.errorMessage}
+					valid={control.valid}
+					touched={control.touched}
+					shouldValidate={!!control.validate}
+					onChange={(event) => this.onChangeHandler(event, controlName)}
 				/>
 			)
 		})
 	}
 
-	
+
 
 	render() {
 
@@ -126,23 +150,23 @@ export default class Auth extends Component {
 
 					<form onSubmit={this.submitHandler} className={classes.AuthForm}>
 
-						{ this.renderInputs() }
-					
+						{this.renderInputs()}
 
-					<Button
-						type="success"
-						onClick={this.loginHandler()}
-						disabled={!this.state.isFormValid}
-					>
-						Войти
+
+						<Button
+							type="success"
+							onClick={this.loginHandler()}
+							disabled={!this.state.isFormValid}
+						>
+							Войти
 					</Button>
 
-					<Button
-						type="primary"
-						onClick={this.registerHandler()}
-						disabled={!this.state.isFormValid}
-					>
-						Регистрация
+						<Button
+							type="primary"
+							onClick={this.registerHandler()}
+							disabled={!this.state.isFormValid}
+						>
+							Регистрация
 					</Button>
 					</form>
 				</div>

@@ -13,7 +13,7 @@ const Select = props => {
 				onChange={props.onChange}
 			>
 				{props.options.map((option, index) => {
-					return (
+					return(
 						<option
 							value={option.value}
 							key={option.value + index}
