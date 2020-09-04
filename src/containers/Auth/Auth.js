@@ -53,6 +53,7 @@ export default class Auth extends Component {
 	}
 
 	registerHandler = async () => {
+		console.log('register HANDLER is working')
 		const authData = {
 			email: this.state.formControls.email.value,
 			password: this.state.formControls.password.value,
@@ -142,6 +143,7 @@ export default class Auth extends Component {
 
 
 	render() {
+		console.log("Render START")
 
 		return (
 			<div className={classes.Auth}>
@@ -155,7 +157,7 @@ export default class Auth extends Component {
 
 						<Button
 							type="success"
-							onClick={this.loginHandler()}
+							onClick={this.loginHandler}
 							disabled={!this.state.isFormValid}
 						>
 							Войти
@@ -163,7 +165,7 @@ export default class Auth extends Component {
 
 						<Button
 							type="primary"
-							onClick={this.registerHandler()}
+							onClick={this.registerHandler}
 							disabled={!this.state.isFormValid}
 						>
 							Регистрация
