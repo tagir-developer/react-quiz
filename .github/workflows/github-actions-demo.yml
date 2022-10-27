@@ -1,13 +1,20 @@
-name: GitHub Actions Demo
+name: GitHub React Quiz App Actions
+
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
+
 jobs:
-  init:
-    - name: Starting build from Dockerfile
-      run: docker build . -t my-app:last
-    - name: Run app from docker image
-      run: docker run -d -p 80:80 my-app:last
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Custom name here
+        run: docker build . -t my-app:last
+      - name: Run app from docker image
+        run: docker run -d -p 80:80 my-app:last
